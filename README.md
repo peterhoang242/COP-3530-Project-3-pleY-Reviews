@@ -4,11 +4,13 @@ Worst Zip Codes by Yelp Reviews
 pleY Reviews
 By Nicholas Bonhoure, Peter Hoang, Anthony Liao
 
+
 Problem:
 We are trying to find the worst zip code in a city in terms of yelp reviews so that
 someone using our program can know which areas to avoid when visiting. Most
 review websites and programs only sort by highest or best ratings, however we
 want to use the premise of worst rated to sort and search businesses.
+
 
 Motivation:
 Yelp lets users search for best business in terms of ratings, reviews, or their
@@ -16,7 +18,9 @@ Yelp lets users search for best business in terms of ratings, reviews, or their
 know what areas to avoid, but have no way of doing so through the yelp
 interface.
 
+
 Features:
+
 ● Inputs a city and returns a list of all the the zip codes from worst to best,
 ranking based on most low star businesses (less than 2-3 stars) (this will
 be the function that we will be timing between two different implementation
@@ -53,6 +57,7 @@ each structure, then printing it. Other functions may not be timed but exist for
 functionality.
 
 Distribution of Responsibility and Roles:
+
 ● Search dataset, menu, worst in usa - Anthony
 
 ● Map , worst business by zip - Peter
