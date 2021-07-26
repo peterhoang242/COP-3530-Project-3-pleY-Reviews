@@ -21,11 +21,15 @@ Features:
 ranking based on most low star businesses (less than 2-3 stars) (this will
 be the function that we will be timing between two different implementation
 of structures)
+
 ● Input city and star rating to return a list of businesses that are of the star
 rating and in the city
+
 ● Input a zip code and returns a list of the worst businesses, worst at the top
 and descending
+
 ● Input “worst business” and returns the worst business in the United States
+
 
 Data:
 The data set we will be using is the Yelp Open Dataset which provides statistics
@@ -50,9 +54,13 @@ functionality.
 
 Distribution of Responsibility and Roles:
 ● Search dataset, menu, worst in usa - Anthony
+
 ● Map , worst business by zip - Peter
+
 ● Min heap , worst business by zip, video - Nicholas
+
 ● Project submission - Nicholas
+
 
 References:
 ● “Yelp Open Dataset.” Yelp Dataset, Yelp, www.yelp.com/dataset.
