@@ -75,6 +75,20 @@ MapNode* P3Map::insert(MapNode* _root, string _name, float _avgRating, int _numR
 	return root;
 }
 
+void P3Map::printWorst(MapNode* _root) {
+	MapNode* root = _root;
+
+	if (root->leftNode != nullptr) {
+		printWorst(root->leftNode);
+	}
+
+	printHelper(root);
+
+	if (root->rightNode != nullptr) {
+		printWorst(root->rightNode);
+	}
+}
+
 void P3Map::printWorstBy(MapNode* _root, string _city, string _zip, float _rating) {
 	MapNode* root = _root;
 	string city = _city;

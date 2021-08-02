@@ -40,6 +40,7 @@ struct P3Map {
 	// Example: rootNode = mapObject.insert(rootNode, name, avgRating, numReviews, zipCode, cityName);
 
 	// Print Functions
+	void printWorst(MapNode* _root);	// Prints a list of the worst businesses based on their rank, in descending order using an inorder traversal, with the worst at the top and descending from there
 	void printWorstBy(MapNode* _root, string _city, string _zip = "", float _rating = -1);	// Given a city name, and/or ZIP code, and/or star rating, print/output a list of the worst businesses that fit the parameters based on their rank using an inorder traversal, with the worst at the top and descending from there
 	void printWorstByZip(MapNode* _root, string _zip);	// Given just a ZIP code, print/output a list of the worst businesses that fit the parameter based on their rank using an inorder traversal, with the worst at the top
 	void printWorstByRating(MapNode* _root, float _rating);	// Given just a rating, print/output a list of the worst businesses that fit the parameter based on their rank using an inorder traversal, with the worst at the top
