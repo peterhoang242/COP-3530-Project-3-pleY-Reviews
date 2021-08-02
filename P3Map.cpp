@@ -45,7 +45,7 @@ MapNode* P3Map::insert(MapNode* _root, string _name, double _avgRating, int _num
 	}
 	else {
 		numNodes++;
-		restaurantNames.push_back(name);
+		businessNames.push_back(name);
 		return new MapNode(name, avgRating, numReviews, zipCode);
 	}
 
