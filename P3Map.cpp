@@ -207,7 +207,7 @@ void P3Map::printNamesInorder(MapNode* _root) {
 bool P3Map::printHelper(MapNode* _root) {
 	MapNode* root = _root;
 	string whitespace = "";
-	for (int i = 0; i < 50 - root->name.size(); i++) {
+	for (int i = 0; i < 60 - root->name.size(); i++) {
 		whitespace.append(" ");
 	}
 	cout << root->name << whitespace << " | Average Rating: " << root->avgRating << " | Number of Reviews: " << root->numReviews << endl;
