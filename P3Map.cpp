@@ -86,7 +86,7 @@ void P3Map::printWorstBy(MapNode* _root, string _city, int _zip, double _rating)
 	}
 
 	if (zip == -1 && rating == -1) {	// If no ZIP code or rating has been provided (-1 is default value)
-		if (root->cityName == city) {
+		if (root->cityName == city && root->avgRating <= 3.0) {	// Ignore businesses that don't match, or have a higher than a 3.0 star rating
 			string whitespace = "";
 			for (int i = 0; i < 15 - root->name.size(); i++) {
 				whitespace.append(" ");
@@ -94,8 +94,8 @@ void P3Map::printWorstBy(MapNode* _root, string _city, int _zip, double _rating)
 			cout << root->name << whitespace << "| Average Rating: " << root->avgRating << " | Number of Reviews: " << root->numReviews << endl;
 		}
 	}
-	else if (zip != -1 && rating == -1) {	// If a ZIP has been provided but not a rating
-		if (root->cityName == city && root->zipCode == zip) {
+	else if (zip != -1 && rating == -1 && root->avgRating <= 3.0) {	// If a ZIP has been provided but not a rating
+		if (root->cityName == city && root->zipCode == zip) {	// Ignore businesses that don't match, or have a higher than a 3.0 star rating
 			string whitespace = "";
 			for (int i = 0; i < 15 - root->name.size(); i++) {
 				whitespace.append(" ");
@@ -112,10 +112,53 @@ void P3Map::printWorstBy(MapNode* _root, string _city, int _zip, double _rating)
 			cout << root->name << whitespace << "| Average Rating: " << root->avgRating << " | Number of Reviews: " << root->numReviews << endl;
 		}
 	}
-	
 
 	if (root->rightNode != nullptr) {
 		printWorstBy(root->rightNode, city, zip, rating);
+	}
+}
+
+void P3Map::printWorstByZip(MapNode* _root, int _zip) {
+	MapNode* root = _root;
+	int zip = _zip;
+
+	if (root->leftNode != nullptr) {
+		printWorstByZip(root->leftNode, zip);
+	}
+
+	if (root->avgRating <= 3.0) {	// Don't do anything if business has an average rating higher than a 3.0 star rating
+		if (root->zipCode == zip) {
+			string whitespace = "";
+			for (int i = 0; i < 15 - root->name.size(); i++) {
+				whitespace.append(" ");
+			}
+			cout << root->name << whitespace << "| Average Rating: " << root->avgRating << " | Number of Reviews: " << root->numReviews << endl;
+		}
+	}
+
+	if (root->rightNode != nullptr) {
+		printWorstByZip(root->rightNode, zip);
+	}
+}
+
+void P3Map::printWorstByRating(MapNode* _root, double _rating) {
+	MapNode* root = _root;
+	double rating = _rating;
+
+	if (root->leftNode != nullptr) {
+		printWorstByRating(root->leftNode, rating);
+	}
+
+	if (root->avgRating >= rating && root->avgRating < rating + 1) {
+		string whitespace = "";
+		for (int i = 0; i < 15 - root->name.size(); i++) {
+			whitespace.append(" ");
+		}
+		cout << root->name << whitespace << "| Average Rating: " << root->avgRating << " | Number of Reviews: " << root->numReviews << endl;
+	}
+	
+	if (root->rightNode != nullptr) {
+		printWorstByRating(root->rightNode, rating);
 	}
 }
 

@@ -41,6 +41,8 @@ struct P3Map {
 
 	// Print Functions
 	void printWorstBy(MapNode* _root, string _city, int _zip = -1, double _rating = -1);	// Given a city name, and/or ZIP code, and/or star rating, print/output a list of the worst businesses that fit the parameters based on their rank using an inorder traversal, with the worst at the top and descending from there
+	void printWorstByZip(MapNode* _root, int _zip);	// Given just a ZIP code, print/output a list of the worst businesses that fit the parameter based on their rank using an inorder traversal, with the worst at the top
+	void printWorstByRating(MapNode* _root, double _rating);	// Given just a rating, print/output a list of the worst businesses that fit the parameter based on their rank using an inorder traversal, with the worst at the top
 		// Basic traversal print functions: mainly for debugging purposes
 	void printRanksInorder(MapNode* _root);
 	void printRanksPostorder(MapNode* _root);
