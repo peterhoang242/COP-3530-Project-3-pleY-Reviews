@@ -15,14 +15,9 @@ class zipCode {
 	//			   1 star = 100k - # of reviews
 	//			   2 star = 200k - # of reviews
     //			   3 star = 300k - # of reviews
-	// probably want to store the name as well in there
 public:
 	zipCode(){}
-	long double ZIPCODE = 0;
 	MinHeap businessRatings; // priority based on the long long
-	int threeStarCounter = 0; // holds # of 3 star business'
-	int twoStarCounter = 0; // holds # of 2 star business'
-	int oneStarCounter = 0; // holds # of 1 star business'
 };
 
 class City {
@@ -30,17 +25,14 @@ class City {
 public:
 	City() {}
 	map<string, zipCode> zips;
-	// potentially store worst zipCode
-	// worst zip will be based on a on the same formula but store
-	// store worst buisness too 
-	//pair <string, zipCode> worstZip;
-	//pair<long double, string> worstBusiness;
 	void insertData(json data);
 };
 
+/* Prints worst business' in ascending order using the city name, zip, and the star rating of interest as input */
 void worstByCityNZipNStar(map<string, City>& cities, string cityName, string zip, int starRating) {
 	long double comparsionNum, test;
 
+	// based on the star rating we would assign comparision numbers to ensure we print within the correct range
 	if (starRating == 1) {
 		test = 0;
 		comparsionNum = 180000;
@@ -61,26 +53,43 @@ void worstByCityNZipNStar(map<string, City>& cities, string cityName, string zip
 		test = 480000;
 		comparsionNum = 600000;
 	}
-	auto temp = cities[cityName].zips[zip].businessRatings;
+	auto temp = cities[cityName].zips[zip].businessRatings; // temporarliy holds the heap for iteration
+	// iterate through the specific zip within the specified city
 	for (int i = 0; i < cities[cityName].zips[zip].businessRatings.getSize(); i++) {
-		if (temp.getMin().first > test && temp.getMin().first < comparsionNum) {
-			cout << "Buiness Name: " << temp.getMin().second << " ";
-			// instead of doing 1 star use the actual star rating prob
-			cout << "Rating: " << fixed << setprecision(1) << temp.getMin().first / 100000 << " Number Of Reviews: ";
-			if (temp.getMin().first < 180000) { // 1 star
-				cout << int(100000 - temp.getMin().first);
+		// if the rating is within range print it out
+		if (temp.getTop().first > test && temp.getTop().first < comparsionNum) {
+			cout << "Buiness Name: " << temp.getTop().second << " ";
+			cout << "Rating: " << fixed << setprecision(1) << temp.getTop().first / 100000 << " Number Of Reviews: ";
+			// Determines based on its rank what the orginal number of reviews where
+			if (temp.getTop().first < 180000) { // 1 star
+				if (100000 - temp.getTop().first < 0)
+					cout << int(150000 - temp.getTop().first);
+				else
+					cout << int(100000 - temp.getTop().first);
 			}
-			else if (temp.getMin().first < 280000) { // 2 star
-				cout << int(200000 - temp.getMin().first);
+			else if (temp.getTop().first < 280000) { // 2 star
+				if (200000 - temp.getTop().first < 0)
+					cout << int(250000 - temp.getTop().first);
+				else
+					cout << int(200000 - temp.getTop().first);
 			}
-			else if (temp.getMin().first < 380000) { // 3 star
-				cout << int(300000 - temp.getMin().first);
+			else if (temp.getTop().first < 380000) { // 3 star
+				if (300000 - temp.getTop().first < 0)
+					cout << int(350000 - temp.getTop().first);
+				else
+					cout << int(300000 - temp.getTop().first);
 			}
-			else if (temp.getMin().first < 480000) { // 4 star
-				cout << int(400000 - temp.getMin().first);
+			else if (temp.getTop().first < 480000) { // 4 star
+				if (400000 - temp.getTop().first < 0)
+					cout << int(450000 - temp.getTop().first);
+				else
+					cout << int(400000 - temp.getTop().first);
 			}
 			else { // 5 star
-				cout << int(500000 - temp.getMin().first);
+				if (500000 - temp.getTop().first < 0)
+					cout << int(550000 - temp.getTop().first);
+				else
+					cout << int(500000 - temp.getTop().first);
 			}
 			cout << endl;
 		}
@@ -88,54 +97,89 @@ void worstByCityNZipNStar(map<string, City>& cities, string cityName, string zip
 	}
 }
 
+/* Prints worst business' in ascending order using both the city name and zip as input */
 void worstByCityNZip(map<string, City>& cities, string cityName, string zip) {
-	auto temp = cities[cityName].zips[zip].businessRatings;
+	auto temp = cities[cityName].zips[zip].businessRatings; // temporarliy holds the heap for iteration
+	// iterate through the data using the specificed city name and zip
 	for (int i = 0; i < cities[cityName].zips[zip].businessRatings.getSize(); i++) {
-		cout << "Buiness Name: " << temp.getMin().second << " ";
-		// instead of doing 1 star use the actual star rating prob
-		cout << "Rating: " << fixed << setprecision(1) << temp.getMin().first / 100000 << " Number Of Reviews: ";
-		//<< 100000 - cities[cityName].zips[zip].businessRatings.getMin().first << endl;
-		if (temp.getMin().first < 180000) { // 1 star
-			cout << int (100000 - temp.getMin().first);
+		cout << "Buiness Name: " << temp.getTop().second << " ";
+		cout << "Rating: " << fixed << setprecision(1) << temp.getTop().first / 100000 << " Number Of Reviews: ";
+		// Determines based on its rank what the orginal number of reviews where
+		if (temp.getTop().first < 180000) { // 1 star
+			if (100000 - temp.getTop().first < 0)
+				cout << int(150000 - temp.getTop().first);
+			else
+				cout << int(100000 - temp.getTop().first);
 		}
-		else if (temp.getMin().first < 280000) { // 2 star
-			cout << int (200000 - temp.getMin().first);
+		else if (temp.getTop().first < 280000) { // 2 star
+			if (200000 - temp.getTop().first < 0)
+				cout << int(250000 - temp.getTop().first);
+			else
+				cout << int(200000 - temp.getTop().first);
 		}
-		else if (temp.getMin().first < 380000) { // 3 star
-			cout << int (300000 - temp.getMin().first);
+		else if (temp.getTop().first < 380000) { // 3 star
+			if (300000 - temp.getTop().first < 0)
+				cout << int(350000 - temp.getTop().first);
+			else
+				cout << int(300000 - temp.getTop().first);
 		}
-		else if (temp.getMin().first < 480000) { // 4 star
-			cout << int (400000 - temp.getMin().first);
+		else if (temp.getTop().first < 480000) { // 4 star
+			if (400000 - temp.getTop().first < 0)
+				cout << int(450000 - temp.getTop().first);
+			else
+				cout << int(400000 - temp.getTop().first);
 		}
 		else { // 5 star
-			cout << int (500000 - temp.getMin().first);
+			if (500000 - temp.getTop().first < 0)
+				cout << int(550000 - temp.getTop().first);
+			else
+				cout << int(500000 - temp.getTop().first);
 		}
 		cout << endl;
 		temp.extractMin();
 	}
 }
 
+/* Prints worst business' in ascending order using only the city name as input */
 void worstByCity(map<string, City>& cities, string cityName) {
+	// iterate through each zip within the specified city
 	for (auto x : cities[cityName].zips) {
-		auto temp = cities[cityName].zips[x.first].businessRatings;
+		auto temp = cities[cityName].zips[x.first].businessRatings; // temporarliy holds the heap for iteration
+		// iterate throught the specified zip within said city
 		for (int j = 0; j < cities[cityName].zips[x.first].businessRatings.getSize(); j++) {
-			cout << "Buiness Name: " << temp.getMin().second << " ";
+			cout << "Buiness Name: " << temp.getTop().second << " ";
 			// instead of doing 1 star use the actual star rating prob
-			cout << "Rating: " << fixed << setprecision(1) << temp.getMin().first / 100000 << " Number Of Reviews: ";
-			if (temp.getMin().first < 180000) { // 1 star
-				cout << 100000 - temp.getMin().first;
+			cout << "Rating: " << fixed << setprecision(1) << temp.getTop().first / 100000 << " Number Of Reviews: ";
+			// Determines based on its rank what the orginal number of reviews where
+			if (temp.getTop().first < 180000) { // 1 star
+				if (100000 - temp.getTop().first < 0)
+					cout << int(150000 - temp.getTop().first);
+				else
+					cout << int(100000 - temp.getTop().first);
 			}
-			else if (temp.getMin().first < 280000) { // 2 star
-				cout << int (200000 - temp.getMin().first);
+			else if (temp.getTop().first < 280000) { // 2 star
+				if (200000 - temp.getTop().first < 0)
+					cout << int(250000 - temp.getTop().first);
+				else
+					cout << int(200000 - temp.getTop().first);
 			}
-			else if (temp.getMin().first < 380000) { // 3 star
-				cout << int (300000 - temp.getMin().first);
+			else if (temp.getTop().first < 380000) { // 3 star
+				if (300000 - temp.getTop().first < 0)
+					cout << int(350000 - temp.getTop().first);
+				else
+					cout << int(300000 - temp.getTop().first);
 			}
-			else if (temp.getMin().first < 480000) { // 4 star
-				cout << int (400000 - temp.getMin().first);
+			else if (temp.getTop().first < 480000) { // 4 star
+				if (400000 - temp.getTop().first < 0)
+					cout << int(450000 - temp.getTop().first);
+				else
+					cout << int(400000 - temp.getTop().first);
 			}
 			else { // 5 star
-				cout << int (500000 - temp.getMin().first);
+				if (500000 - temp.getTop().first < 0)
+					cout << int(550000 - temp.getTop().first);
+				else
+					cout << int(500000 - temp.getTop().first);
 			}
 			cout << endl;
 			temp.extractMin();
@@ -143,36 +187,24 @@ void worstByCity(map<string, City>& cities, string cityName) {
 	}
 }
 
+/* Prints worst business' in ascending order using only the zip as input */
 void worstByZip(map<string, City>& cities, string zip) {
 	string cityName;
+	// iterates through each city
 	for (auto x : cities) {
 		if (x.second.zips.find(zip) != x.second.zips.end()) {
 			cityName = x.first;
 			break;
 		}
 	}
+	// calls worstByCityNZip with the new found city name
 	worstByCityNZip(cities, cityName, zip);
 }
-/*
-void worstByRating() {
 
-}
-*/
+/* calculates the rank of our website based on its rating and number of reviews */
 double calcRank(double starRating, int numOReviews) {
 	return (starRating * 100000) - numOReviews;
 }
 
-
-
-
-
-//input city name, returns list of all the zip codes from worst to best
-//based on most low star businesses( < 2-3 stars)
-
-// input city and star rating to return list of of that star in said city
-
-// input zip and return list of worst buisness in that zip
-
-// input "worst buisness" return the worst business
 
 
