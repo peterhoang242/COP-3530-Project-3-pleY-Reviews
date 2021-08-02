@@ -9,10 +9,10 @@ struct MapNode {	// MapNode struct for a self-balancing BST that will be used to
 	string name;	// Name of the business
 	
 	// Values
-	double avgRating;	// Average star rating of the business
+	float avgRating;	// Average star rating of the business
 	int numReviews;		// Number of reviews the business has
 	int rank;			// A calculated value/rank for how "bad" a business is according to its star rating and number of reviews
-	int zipCode;		// Each MapNode will also hold a business's ZIP code
+	string zipCode;		// Each MapNode will also hold a business's ZIP code
 	string cityName;	// Name of city that the business is located in
 	
 	// Balance Factor and Left/Right Pointers
@@ -22,7 +22,7 @@ struct MapNode {	// MapNode struct for a self-balancing BST that will be used to
 
 	// Constructors
 	MapNode();	// Default constructor
-	MapNode(string _name, double _avgRating, int _numReviews, int _zipCode, string _cityName);	// Main constructor
+	MapNode(string _name, float _avgRating, int _numReviews, string _zipCode, string _cityName);	// Main constructor
 };
 
 struct P3Map {
@@ -35,14 +35,14 @@ struct P3Map {
 
 	// Main Functions
 		// Insert function
-	MapNode* insert(MapNode* _root, string _name, double _avgRating, int _numReviews, int _zipCode, string _cityName);
+	MapNode* insert(MapNode* _root, string _name, float _avgRating, int _numReviews, string _zipCode, string _cityName);
 	// NOTE: You must reinitialize the map tree's rootNode pointer using this insert function each time you insert in order for that pointer to update properly after rotations!
 	// Example: rootNode = mapObject.insert(rootNode, name, avgRating, numReviews, zipCode, cityName);
 
 	// Print Functions
-	void printWorstBy(MapNode* _root, string _city, int _zip = -1, double _rating = -1);	// Given a city name, and/or ZIP code, and/or star rating, print/output a list of the worst businesses that fit the parameters based on their rank using an inorder traversal, with the worst at the top and descending from there
-	void printWorstByZip(MapNode* _root, int _zip);	// Given just a ZIP code, print/output a list of the worst businesses that fit the parameter based on their rank using an inorder traversal, with the worst at the top
-	void printWorstByRating(MapNode* _root, double _rating);	// Given just a rating, print/output a list of the worst businesses that fit the parameter based on their rank using an inorder traversal, with the worst at the top
+	void printWorstBy(MapNode* _root, string _city, string _zip = "", float _rating = -1);	// Given a city name, and/or ZIP code, and/or star rating, print/output a list of the worst businesses that fit the parameters based on their rank using an inorder traversal, with the worst at the top and descending from there
+	void printWorstByZip(MapNode* _root, string _zip);	// Given just a ZIP code, print/output a list of the worst businesses that fit the parameter based on their rank using an inorder traversal, with the worst at the top
+	void printWorstByRating(MapNode* _root, float _rating);	// Given just a rating, print/output a list of the worst businesses that fit the parameter based on their rank using an inorder traversal, with the worst at the top
 		// Basic traversal print functions: mainly for debugging purposes
 	void printRanksInorder(MapNode* _root);
 	void printRanksPostorder(MapNode* _root);
@@ -58,5 +58,5 @@ struct P3Map {
 
 
 // Misc Helper Functions
-int calculateRank(double _avgRating, int _numReviews); 
+int calculateRank(float _avgRating, int _numReviews); 
 // Helper function to calculate the "rank" of a business, or how "bad" it is, using that business's average star rating and number of reviews.

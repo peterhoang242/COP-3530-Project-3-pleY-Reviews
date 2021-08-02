@@ -3,13 +3,13 @@
 MapNode::MapNode() {	// Default constructor
 	name = "";
 	rank = 0;
-	zipCode = 0;
+	zipCode = "";
 	balanceFactor = 0;
 	leftNode = nullptr;
 	rightNode = nullptr;
 }
 
-MapNode::MapNode(string _name, double _avgRating, int _numReviews, int _zipCode, string _cityName) {	// Main constructor
+MapNode::MapNode(string _name, float _avgRating, int _numReviews, string _zipCode, string _cityName) {	// Main constructor
 	name = _name;
 	avgRating = _avgRating;
 	numReviews = _numReviews;
@@ -28,13 +28,13 @@ P3Map::P3Map() {
 
 // NOTE: You must reinitialize the map tree's rootNode pointer using this insert function each time you insert in order for that pointer to update properly after rotations!
 // Example: rootNode = mapObject.insert(rootNode, name, avgRating, numReviews, zipCode, cityName);
-MapNode* P3Map::insert(MapNode* _root, string _name, double _avgRating, int _numReviews, int _zipCode, string _cityName) {
+MapNode* P3Map::insert(MapNode* _root, string _name, float _avgRating, int _numReviews, string _zipCode, string _cityName) {
 	MapNode* root = _root;
 	string name = _name;
-	double avgRating = _avgRating;
+	float avgRating = _avgRating;
 	int numReviews = _numReviews;
 	int rank = calculateRank(avgRating, numReviews);
-	int zipCode = _zipCode;
+	string zipCode = _zipCode;
 	string cityName = _cityName;
 
 	if (root != nullptr) {
@@ -75,27 +75,27 @@ MapNode* P3Map::insert(MapNode* _root, string _name, double _avgRating, int _num
 	return root;
 }
 
-void P3Map::printWorstBy(MapNode* _root, string _city, int _zip, double _rating) {
+void P3Map::printWorstBy(MapNode* _root, string _city, string _zip, float _rating) {
 	MapNode* root = _root;
 	string city = _city;
-	int zip = _zip;
-	double rating = _rating;
+	string zip = _zip;
+	float rating = _rating;
 	
 	if (root->leftNode != nullptr) {
 		printWorstBy(root->leftNode, city, zip, rating);
 	}
 
-	if (zip == -1 && rating == -1) {	// If no ZIP code or rating has been provided (-1 is default value)
+	if (zip == "" && rating == -1) {	// If no ZIP code or rating has been provided (-1 is default value)
 		if (root->cityName == city && root->avgRating < 4.0) {	// Ignore businesses that don't match, or have a higher than a 3.0 star rating
 			printHelper(root);
 		}
 	}
-	else if (zip != -1 && rating == -1) {	// If a ZIP has been provided but not a rating
+	else if (zip != "" && rating == -1) {	// If a ZIP has been provided but not a rating
 		if (root->cityName == city && root->zipCode == zip && root->avgRating < 4.0) {	// Ignore businesses that don't match, or have a higher than a 3.0 star rating
 			printHelper(root);
 		}
 	}
-	else if (zip != -1 && rating != -1) {	// If a ZIP and rating has been provided
+	else if (zip != "" && rating != -1) {	// If a ZIP and rating has been provided
 		if (root->cityName == city && root->zipCode == zip && (root->avgRating >= rating && root->avgRating < rating + 1)) {
 			printHelper(root);
 		}
@@ -106,9 +106,9 @@ void P3Map::printWorstBy(MapNode* _root, string _city, int _zip, double _rating)
 	}
 }
 
-void P3Map::printWorstByZip(MapNode* _root, int _zip) {
+void P3Map::printWorstByZip(MapNode* _root, string _zip) {
 	MapNode* root = _root;
-	int zip = _zip;
+	string zip = _zip;
 
 	if (root->leftNode != nullptr) {
 		printWorstByZip(root->leftNode, zip);
@@ -125,9 +125,9 @@ void P3Map::printWorstByZip(MapNode* _root, int _zip) {
 	}
 }
 
-void P3Map::printWorstByRating(MapNode* _root, double _rating) {
+void P3Map::printWorstByRating(MapNode* _root, float _rating) {
 	MapNode* root = _root;
-	double rating = _rating;
+	float rating = _rating;
 
 	if (root->leftNode != nullptr) {
 		printWorstByRating(root->leftNode, rating);
@@ -258,6 +258,6 @@ MapNode* P3Map::rotateRight(MapNode* _root) {
 	return newParent;
 }
 
-int calculateRank(double _avgRating, int _numReviews) {
+int calculateRank(float _avgRating, int _numReviews) {
 	return ((100000 * _avgRating) - _numReviews);
 }
