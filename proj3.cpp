@@ -26,7 +26,7 @@ int main()
         
         // Create map:
         P3Map businessMap = P3Map();
-        MapNode* root = test.rootNode;
+        MapNode* root = businessMap.rootNode;
             
         if (ifs.is_open()) {
             cout << "start in" << endl;
