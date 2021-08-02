@@ -39,12 +39,14 @@ struct P3Map {
 	// NOTE: You must reinitialize the map tree's rootNode pointer using this insert function each time you insert in order for that pointer to update properly after rotations!
 	// Example: rootNode = mapObject.insert(rootNode, name, avgRating, numReviews, zipCode, cityName);
 
-	// Print Functions
-	void printWorst(MapNode* _root);	// Prints a list of the worst businesses based on their rank, in descending order using an inorder traversal, with the worst at the top and descending from there
+	// Main Print Functions
 	bool printWorstBy(MapNode* _root, string _city, string _zip = "", float _rating = -1, bool _resultFound = false);	// Given a city name, and/or ZIP code, and/or star rating, print/output a list of the worst businesses that fit the parameters based on their rank using an inorder traversal, with the worst at the top and descending from there
 	bool printWorstByZip(MapNode* _root, string _zip, bool _resultFound = false);	// Given just a ZIP code, print/output a list of the worst businesses that fit the parameter based on their rank using an inorder traversal, with the worst at the top
 	bool printWorstByRating(MapNode* _root, float _rating, bool _resultFound = false);	// Given just a rating, print/output a list of the worst businesses that fit the parameter based on their rank using an inorder traversal, with the worst at the top
 	// _resultFound is a boolean that will be true as long as a result matching the search parameters was found: if not, it will be false.
+
+	// Debugging Print Functions
+	void printWorst(MapNode* _root);	// Used mainly for debugging: Prints a list of every business based on their rank, in descending order using an inorder traversal, with the worst at the top and descending from there
 		// Basic traversal print functions: mainly for debugging purposes
 	void printRanksInorder(MapNode* _root);
 	void printRanksPostorder(MapNode* _root);
