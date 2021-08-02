@@ -11,7 +11,7 @@ struct MapNode {	// MapNode struct for a self-balancing BST that will be used to
 	// Values
 	double avgRating;	// Average star rating of the restaurant
 	int numReviews;		// Number of reviews the restaurant has
-	int rank;			// A calculated value/rank for how "bad" a business is according to its star rating and number of reviews
+	int rank;		// A calculated value/rank for how "bad" a business is according to its star rating and number of reviews
 	int zipCode;		// Each MapNode will also hold a restaurant's ZIP code
 	
 	// Balance Factor and Left/Right Pointers
@@ -26,8 +26,8 @@ struct MapNode {	// MapNode struct for a self-balancing BST that will be used to
 
 struct P3Map {
 	vector<string> restaurantNames;	// Vector to hold keys (restaurant names)
-	MapNode* rootNode;				// Root node for set (implemented as a self-balancing BST) to hold values (average rating, number of reviews, restaurant rank, and ZIP code)
-	int numNodes;					// Total number of nodes in the map
+	MapNode* rootNode;		// Root node for set (implemented as a self-balancing BST) to hold values (average rating, number of reviews, restaurant rank, and ZIP code)
+	int numNodes;			// Total number of nodes in the map
 
 	// Constructors
 	P3Map();	// Default Constructor
@@ -46,8 +46,8 @@ struct P3Map {
 	void printNamesInorder(MapNode* _root);
 
 	// Helper Functions
-	int getHeight(MapNode* _root);			// Calculates and returns the height of a tree/subtree given a root node
-	int getBalance(MapNode* _root);			// Calculates and returns balance factor for a node
+	int getHeight(MapNode* _root);		// Calculates and returns the height of a tree/subtree given a root node
+	int getBalance(MapNode* _root);		// Calculates and returns balance factor for a node
 	MapNode* rotateLeft(MapNode* _root);	// Left rotation for balancing the tree, 
 	MapNode* rotateRight(MapNode* _root);	// Right rotation for balancing the tree
 };
