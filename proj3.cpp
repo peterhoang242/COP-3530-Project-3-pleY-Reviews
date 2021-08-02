@@ -23,7 +23,8 @@ int main()
     case 1:
 
         int count = 0;
-            
+        
+        // Create map:
         P3Map businessMap = P3Map();
         MapNode* root = test.rootNode;
             
