@@ -27,7 +27,7 @@ P3Map::P3Map() {
 }
 
 // NOTE: You must reinitialize the map tree's rootNode pointer using this insert function each time you insert in order for that pointer to update properly after rotations!
-// Example: rootNode = mapObject.insert(rootNode, name, avgRating, numReviews, zipCode);
+// Example: rootNode = mapObject.insert(rootNode, name, avgRating, numReviews, zipCode, cityName);
 MapNode* P3Map::insert(MapNode* _root, string _name, double _avgRating, int _numReviews, int _zipCode, string _cityName) {
 	MapNode* root = _root;
 	string name = _name;
