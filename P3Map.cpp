@@ -86,12 +86,12 @@ void P3Map::printWorstBy(MapNode* _root, string _city, int _zip, double _rating)
 	}
 
 	if (zip == -1 && rating == -1) {	// If no ZIP code or rating has been provided (-1 is default value)
-		if (root->cityName == city && root->avgRating <= 3.0) {	// Ignore businesses that don't match, or have a higher than a 3.0 star rating
+		if (root->cityName == city && root->avgRating < 4.0) {	// Ignore businesses that don't match, or have a higher than a 3.0 star rating
 			printHelper(root);
 		}
 	}
 	else if (zip != -1 && rating == -1) {	// If a ZIP has been provided but not a rating
-		if (root->cityName == city && root->zipCode == zip && root->avgRating <= 3.0) {	// Ignore businesses that don't match, or have a higher than a 3.0 star rating
+		if (root->cityName == city && root->zipCode == zip && root->avgRating < 4.0) {	// Ignore businesses that don't match, or have a higher than a 3.0 star rating
 			printHelper(root);
 		}
 	}
@@ -115,7 +115,7 @@ void P3Map::printWorstByZip(MapNode* _root, int _zip) {
 	}
 
 	
-	if (root->zipCode == zip && root->avgRating <= 3.0) {	// Don't do anything if business has an average rating higher than a 3.0 star rating
+	if (root->zipCode == zip && root->avgRating < 4.0) {	// Don't do anything if business has an average rating higher than a 3.0 star rating
 		printHelper(root);
 	}
 	
