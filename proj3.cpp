@@ -3,7 +3,7 @@
 #include <fstream>
 #include <chrono>
 #include <ctime> 
-#include "P3Map.h"
+#include "P3Map.cpp"
 
 using json = nlohmann::json;
 using namespace std;
@@ -77,7 +77,7 @@ int main()
     string in;
 
     while (input != 5) {
-        cout << "Select an option (1-5):\n1. Worst Business by city\n2. Business by city and star rating\n3. Worst business by ZIP code\n4. Worst business in the United States\n5. Exit" << endl;
+        cout << "Select an option (1-5):\n1. Worst Business by Zip Code\n2. Worst Business by City\n3. Worst business by Zip Code and City\n4. Worst business by ZIP Code, City, and star rating\n5. Exit" << endl;
         cin >> in;
         try {
             input = stoi(in);
@@ -91,29 +91,71 @@ int main()
             continue;
         }
 
+        string zip;
+        string city;
+        string stars;
         switch (input) {
-        case 1:
+        case 1: 
+        {
+            cout << "Insert a Zipcode:\n";
+            cin >> zip;
+            cout << "Map Search:\n";
+            auto startMap = std::chrono::system_clock::now();
+            businessMap.printWorstByZip(root, zip);
+            std::chrono::duration<double> elapsed_seconds = std::chrono::system_clock::now() - startMap;
 
+
+            cout << "Time for Map to search and print: " << elapsed_seconds.count() << " seconds" << endl;
+        }
             break;
         case 2:
+        {
+            cout << "Insert a City:\n";
+            cin >> city;
+            cout << "Map Search:\n";
+            auto startMap = std::chrono::system_clock::now();
+            businessMap.printWorstBy(root, city);
+            std::chrono::duration<double> elapsed_seconds = std::chrono::system_clock::now() - startMap;
+
+
+            cout << "Time for Map to search and print: " << elapsed_seconds.count() << " seconds" << endl;
+        }
 
             break;
         case 3:
+        {
+            cout << "Insert a Zip Code and City:\n";
+            cin >> zip;
+            cin >> city;
 
+            cout << "Map Search:\n";
+            auto startMap = std::chrono::system_clock::now();
+            businessMap.printWorstBy(root, city, zip);
+            std::chrono::duration<double> elapsed_seconds = std::chrono::system_clock::now() - startMap;
+
+
+            cout << "Time for Map to search and print: " << elapsed_seconds.count() << " seconds" << endl;
+        }
             break;
         case 4:
+        {
+            cout << "Insert a Zip Code, City, and star rating:\n";
+            cin >> zip;
+            cin >> city;
+            cin >> stars;
+            cout << "Map worst:\n";
+            auto startMap = std::chrono::system_clock::now();
+            businessMap.printWorstBy(root, city, zip, stod(stars));
+            std::chrono::duration<double> elapsed_seconds = std::chrono::system_clock::now() - startMap;
 
+
+            cout << "Time for Map to search and print: " << elapsed_seconds.count() << " seconds" << endl;
+        }
             break;
         }
-
-        //1.
 
 
 
     }
-
-}
-
-void insertInto() {
 
 }
