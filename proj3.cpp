@@ -3,6 +3,7 @@
 #include <fstream>
 #include <chrono>
 #include <ctime> 
+#include "P3Map.h"
 
 using json = nlohmann::json;
 using namespace std;
@@ -22,6 +23,10 @@ int main()
     case 1:
 
         int count = 0;
+            
+        P3Map businessMap = P3Map();
+        MapNode* root = test.rootNode;
+            
         if (ifs.is_open()) {
             cout << "start in" << endl;
             auto start = std::chrono::system_clock::now();
@@ -31,6 +36,7 @@ int main()
 
                     ifs >> jBusiness;
                     //insert to map here
+                    root = businessMap.insert(root, jBusiness["name"], jBusiness["stars"], jBusiness["review_count"], jBusiness["postal_code"], jBusiness["city"]);
                 }
                 catch (exception e) {
 
