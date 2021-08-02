@@ -49,6 +49,7 @@ struct P3Map {
 	void printNamesInorder(MapNode* _root);
 
 	// Helper Functions
+	void printHelper(MapNode* _root);		// Helper function for main print functions, handles the actual printing of information: helps cut down on repetitive code
 	int getHeight(MapNode* _root);			// Calculates and returns the height of a tree/subtree given a root node
 	int getBalance(MapNode* _root);			// Calculates and returns balance factor for a node
 	MapNode* rotateLeft(MapNode* _root);	// Left rotation for balancing the tree, 
