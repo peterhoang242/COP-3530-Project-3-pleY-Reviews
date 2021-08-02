@@ -10,9 +10,9 @@ struct MapNode {	// MapNode struct for a self-balancing BST that will be used to
 	
 	// Values
 	double avgRating;	// Average star rating of the restaurant
-	int numReviews;	// Number of reviews the restaurant has
+	int numReviews;		// Number of reviews the restaurant has
 	int rank;		// The data each MapNode will hold: a calculated value/rank for how "bad" a business is according to its star rating and number of reviews
-	int zipCode;	// Each MapNode will also hold a restaurant's ZIP code
+	int zipCode;		// Each MapNode will also hold a restaurant's ZIP code
 	
 	// Balance Factor and Left/Right Pointers
 	int balanceFactor;
