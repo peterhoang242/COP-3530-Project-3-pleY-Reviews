@@ -1,80 +1,165 @@
-#include <queue>
 #include <iostream>
 #include <vector>
+#include <iomanip>
 #include <map>
-#include <set>
 #include <string>
+#include "heap.h"
 #include "json.h"
 
 using json = nlohmann::json;
 using namespace std;
 
-typedef pair<long long, string> pleY; // yelp backwards - represents the buiness name and its ranking determination based on formula
 
 class zipCode {
 	// stored number is based on formula  - # of reviews because we want the lost number for priority queue
-	//			   1 star = 1mill - # of reviews
-	//			   2 star = 2mill - # of reviews
-    //			   3 star = 3mill - # of reviews
+	//			   1 star = 100k - # of reviews
+	//			   2 star = 200k - # of reviews
+    //			   3 star = 300k - # of reviews
 	// probably want to store the name as well in there
 public:
-	long long ZIPCODE = 0;
-	priority_queue <pleY, vector<pleY>, greater<pleY>> buinessRatings; // priority based on the long long
+	zipCode(){}
+	long double ZIPCODE = 0;
+	MinHeap businessRatings; // priority based on the long long
 	int threeStarCounter = 0; // holds # of 3 star business'
 	int twoStarCounter = 0; // holds # of 2 star business'
 	int oneStarCounter = 0; // holds # of 1 star business'
 };
 
 class City {
+
 public:
+	City() {}
 	map<string, zipCode> zips;
+	// potentially store worst zipCode
+	// worst zip will be based on a on the same formula but store
+	// store worst buisness too 
+	//pair <string, zipCode> worstZip;
+	//pair<long double, string> worstBusiness;
+	void insertData(json data);
 };
 
 void worstByCityNZipNStar(map<string, City>& cities, string cityName, string zip, int starRating) {
-	long float comparsionNum, temp;
+	long double comparsionNum, test;
 
 	if (starRating == 1) {
-		temp = 0;
-		comparsionNum = 1500000;
+		test = 0;
+		comparsionNum = 180000;
 	}
 	else if (starRating == 2) {
-		temp = 1500000;
-		comparsionNum = 2500000;
+		test = 180000;
+		comparsionNum = 280000;
 	}
-	else {
-		temp = 2500000;
-		comparsionNum = 3500000;
+	else if (starRating == 3) {
+		test = 280000;
+		comparsionNum = 380000;
 	}
-	
-	for (int i = 0; i < cities[cityName].zips[zip].buinessRatings.size(); i++) {
-		if (cities[cityName].zips[zip].buinessRatings.top().first > temp && cities[cityName].zips[zip].buinessRatings.top().first < comparsionNum) {
-			cout << "Buiness Name: " << cities[cityName].zips[zip].buinessRatings.top().second << " ";
+	else if (starRating == 4) {
+		test = 380000;
+		comparsionNum = 480000;
+	}
+	else { // 5 stars
+		test = 480000;
+		comparsionNum = 600000;
+	}
+	auto temp = cities[cityName].zips[zip].businessRatings;
+	for (int i = 0; i < cities[cityName].zips[zip].businessRatings.getSize(); i++) {
+		if (temp.getMin().first > test && temp.getMin().first < comparsionNum) {
+			cout << "Buiness Name: " << temp.getMin().second << " ";
 			// instead of doing 1 star use the actual star rating prob
-			cout << "Rating: 1 Star" << " Number Of Reviews: " << 1000000 - cities[cityName].zips[zip].buinessRatings.top().first << endl;
+			cout << "Rating: " << fixed << setprecision(1) << temp.getMin().first / 100000 << " Number Of Reviews: ";
+			if (temp.getMin().first < 180000) { // 1 star
+				cout << int(100000 - temp.getMin().first);
+			}
+			else if (temp.getMin().first < 280000) { // 2 star
+				cout << int(200000 - temp.getMin().first);
+			}
+			else if (temp.getMin().first < 380000) { // 3 star
+				cout << int(300000 - temp.getMin().first);
+			}
+			else if (temp.getMin().first < 480000) { // 4 star
+				cout << int(400000 - temp.getMin().first);
+			}
+			else { // 5 star
+				cout << int(500000 - temp.getMin().first);
+			}
+			cout << endl;
 		}
-		cities[cityName].zips[zip].buinessRatings.pop();
+		temp.extractMin();
 	}
 }
 
 void worstByCityNZip(map<string, City>& cities, string cityName, string zip) {
-	for (int i = 0; i < cities[cityName].zips[zip].buinessRatings.size(); i++) {
-		cout << "Buiness Name: " << cities[cityName].zips[zip].buinessRatings.top().second << " ";
+	auto temp = cities[cityName].zips[zip].businessRatings;
+	for (int i = 0; i < cities[cityName].zips[zip].businessRatings.getSize(); i++) {
+		cout << "Buiness Name: " << temp.getMin().second << " ";
 		// instead of doing 1 star use the actual star rating prob
-		cout << "Rating: 1 Star" << " Number Of Reviews: " << 1000000 - cities[cityName].zips[zip].buinessRatings.top().first << endl;
-		cities[cityName].zips[zip].buinessRatings.pop();
+		cout << "Rating: " << fixed << setprecision(1) << temp.getMin().first / 100000 << " Number Of Reviews: ";
+		//<< 100000 - cities[cityName].zips[zip].businessRatings.getMin().first << endl;
+		if (temp.getMin().first < 180000) { // 1 star
+			cout << int (100000 - temp.getMin().first);
+		}
+		else if (temp.getMin().first < 280000) { // 2 star
+			cout << int (200000 - temp.getMin().first);
+		}
+		else if (temp.getMin().first < 380000) { // 3 star
+			cout << int (300000 - temp.getMin().first);
+		}
+		else if (temp.getMin().first < 480000) { // 4 star
+			cout << int (400000 - temp.getMin().first);
+		}
+		else { // 5 star
+			cout << int (500000 - temp.getMin().first);
+		}
+		cout << endl;
+		temp.extractMin();
 	}
 }
 
 void worstByCity(map<string, City>& cities, string cityName) {
 	for (auto x : cities[cityName].zips) {
-		for (int j = 0; j < cities[cityName].zips[x.first].buinessRatings.size(); j++) {
-			cout << "Buiness Name: " << cities[cityName].zips[x.first].buinessRatings.top().second << " ";
+		auto temp = cities[cityName].zips[x.first].businessRatings;
+		for (int j = 0; j < cities[cityName].zips[x.first].businessRatings.getSize(); j++) {
+			cout << "Buiness Name: " << temp.getMin().second << " ";
 			// instead of doing 1 star use the actual star rating prob
-			cout << "Rating: 1 Star" << " Number Of Reviews: " << 1000000 - cities[cityName].zips[x.first].buinessRatings.top().first << endl;
-			cities[cityName].zips[x.first].buinessRatings.pop();
+			cout << "Rating: " << fixed << setprecision(1) << temp.getMin().first / 100000 << " Number Of Reviews: ";
+			if (temp.getMin().first < 180000) { // 1 star
+				cout << 100000 - temp.getMin().first;
+			}
+			else if (temp.getMin().first < 280000) { // 2 star
+				cout << int (200000 - temp.getMin().first);
+			}
+			else if (temp.getMin().first < 380000) { // 3 star
+				cout << int (300000 - temp.getMin().first);
+			}
+			else if (temp.getMin().first < 480000) { // 4 star
+				cout << int (400000 - temp.getMin().first);
+			}
+			else { // 5 star
+				cout << int (500000 - temp.getMin().first);
+			}
+			cout << endl;
+			temp.extractMin();
 		}
 	}
+}
 
+void worstByZip(map<string, City>& cities, string zip) {
+	string cityName;
+	for (auto x : cities) {
+		if (x.second.zips.find(zip) != x.second.zips.end()) {
+			cityName = x.first;
+			break;
+		}
+	}
+	worstByCityNZip(cities, cityName, zip);
+}
+/*
+void worstByRating() {
+
+}
+*/
+double calcRank(double starRating, int numOReviews) {
+	return (starRating * 100000) - numOReviews;
 }
 
 
