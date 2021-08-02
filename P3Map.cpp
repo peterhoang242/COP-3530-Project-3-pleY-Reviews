@@ -89,71 +89,80 @@ void P3Map::printWorst(MapNode* _root) {
 	}
 }
 
-void P3Map::printWorstBy(MapNode* _root, string _city, string _zip, float _rating) {
+bool P3Map::printWorstBy(MapNode* _root, string _city, string _zip, float _rating, bool _resultFound) {
 	MapNode* root = _root;
 	string city = _city;
 	string zip = _zip;
 	float rating = _rating;
+	bool resultFound = _resultFound;
 	
 	if (root->leftNode != nullptr) {
-		printWorstBy(root->leftNode, city, zip, rating);
+		resultFound = printWorstBy(root->leftNode, city, zip, rating, resultFound);
 	}
 
 	if (zip == "" && rating == -1) {	// If no ZIP code or rating has been provided (-1 is default value)
 		if (root->cityName == city && root->avgRating < 4.0) {	// Ignore businesses that don't match, or have a higher than a 3.0 star rating
-			printHelper(root);
+			resultFound = printHelper(root);
 		}
 	}
 	else if (zip != "" && rating == -1) {	// If a ZIP has been provided but not a rating
 		if (root->cityName == city && root->zipCode == zip && root->avgRating < 4.0) {	// Ignore businesses that don't match, or have a higher than a 3.0 star rating
-			printHelper(root);
+			resultFound = printHelper(root);
 		}
 	}
 	else if (zip != "" && rating != -1) {	// If a ZIP and rating has been provided
 		if (root->cityName == city && root->zipCode == zip && (root->avgRating >= rating && root->avgRating < rating + 1)) {
-			printHelper(root);
+			resultFound = printHelper(root);
 		}
 	}
 
 	if (root->rightNode != nullptr) {
-		printWorstBy(root->rightNode, city, zip, rating);
+		resultFound = printWorstBy(root->rightNode, city, zip, rating, resultFound);
 	}
+
+	return resultFound;
 }
 
-void P3Map::printWorstByZip(MapNode* _root, string _zip) {
+bool P3Map::printWorstByZip(MapNode* _root, string _zip, bool _resultFound) {
 	MapNode* root = _root;
 	string zip = _zip;
+	bool resultFound = _resultFound;
 
 	if (root->leftNode != nullptr) {
-		printWorstByZip(root->leftNode, zip);
+		resultFound = printWorstByZip(root->leftNode, zip, resultFound);
 	}
 
 	
 	if (root->zipCode == zip && root->avgRating < 4.0) {	// Don't do anything if business has an average rating higher than a 3.0 star rating
-		printHelper(root);
+		resultFound = printHelper(root);
 	}
 	
 
 	if (root->rightNode != nullptr) {
-		printWorstByZip(root->rightNode, zip);
+		resultFound = printWorstByZip(root->rightNode, zip, resultFound);
 	}
+
+	return resultFound;
 }
 
-void P3Map::printWorstByRating(MapNode* _root, float _rating) {
+bool P3Map::printWorstByRating(MapNode* _root, float _rating, bool _resultFound) {
 	MapNode* root = _root;
 	float rating = _rating;
+	bool resultFound = _resultFound;
 
 	if (root->leftNode != nullptr) {
-		printWorstByRating(root->leftNode, rating);
+		resultFound = printWorstByRating(root->leftNode, rating, resultFound);
 	}
 
 	if (root->avgRating >= rating && root->avgRating < rating + 1) {
-		printHelper(root);
+		resultFound = printHelper(root);
 	}
 	
 	if (root->rightNode != nullptr) {
-		printWorstByRating(root->rightNode, rating);
+		resultFound = printWorstByRating(root->rightNode, rating, resultFound);
 	}
+
+	return resultFound;
 }
 
 void P3Map::printRanksInorder(MapNode* _root) {
@@ -195,13 +204,14 @@ void P3Map::printNamesInorder(MapNode* _root) {
 	}
 }
 
-void P3Map::printHelper(MapNode* _root) {
+bool P3Map::printHelper(MapNode* _root) {
 	MapNode* root = _root;
 	string whitespace = "";
-	for (int i = 0; i < 15 - root->name.size(); i++) {
+	for (int i = 0; i < 50 - root->name.size(); i++) {
 		whitespace.append(" ");
 	}
-	cout << root->name << whitespace << "| Average Rating: " << root->avgRating << " | Number of Reviews: " << root->numReviews << endl;
+	cout << root->name << whitespace << " | Average Rating: " << root->avgRating << " | Number of Reviews: " << root->numReviews << endl;
+	return true;
 }
 
 int P3Map::getHeight(MapNode* _root) {

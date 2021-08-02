@@ -41,16 +41,17 @@ struct P3Map {
 
 	// Print Functions
 	void printWorst(MapNode* _root);	// Prints a list of the worst businesses based on their rank, in descending order using an inorder traversal, with the worst at the top and descending from there
-	void printWorstBy(MapNode* _root, string _city, string _zip = "", float _rating = -1);	// Given a city name, and/or ZIP code, and/or star rating, print/output a list of the worst businesses that fit the parameters based on their rank using an inorder traversal, with the worst at the top and descending from there
-	void printWorstByZip(MapNode* _root, string _zip);	// Given just a ZIP code, print/output a list of the worst businesses that fit the parameter based on their rank using an inorder traversal, with the worst at the top
-	void printWorstByRating(MapNode* _root, float _rating);	// Given just a rating, print/output a list of the worst businesses that fit the parameter based on their rank using an inorder traversal, with the worst at the top
+	bool printWorstBy(MapNode* _root, string _city, string _zip = "", float _rating = -1, bool _resultFound = false);	// Given a city name, and/or ZIP code, and/or star rating, print/output a list of the worst businesses that fit the parameters based on their rank using an inorder traversal, with the worst at the top and descending from there
+	bool printWorstByZip(MapNode* _root, string _zip, bool _resultFound = false);	// Given just a ZIP code, print/output a list of the worst businesses that fit the parameter based on their rank using an inorder traversal, with the worst at the top
+	bool printWorstByRating(MapNode* _root, float _rating, bool _resultFound = false);	// Given just a rating, print/output a list of the worst businesses that fit the parameter based on their rank using an inorder traversal, with the worst at the top
+	// _resultFound is a boolean that will be true as long as a result matching the search parameters was found: if not, it will be false.
 		// Basic traversal print functions: mainly for debugging purposes
 	void printRanksInorder(MapNode* _root);
 	void printRanksPostorder(MapNode* _root);
 	void printNamesInorder(MapNode* _root);
 
 	// Helper Functions
-	void printHelper(MapNode* _root);		// Helper function for main print functions, handles the actual printing of information: helps cut down on repetitive code
+	bool printHelper(MapNode* _root);		// Helper function for main print functions, handles the actual printing of information: helps cut down on repetitive code
 	int getHeight(MapNode* _root);			// Calculates and returns the height of a tree/subtree given a root node
 	int getBalance(MapNode* _root);			// Calculates and returns balance factor for a node
 	MapNode* rotateLeft(MapNode* _root);	// Left rotation for balancing the tree, 
