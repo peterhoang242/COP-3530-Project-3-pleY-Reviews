@@ -94,8 +94,8 @@ void P3Map::printWorstBy(MapNode* _root, string _city, int _zip, double _rating)
 			cout << root->name << whitespace << "| Average Rating: " << root->avgRating << " | Number of Reviews: " << root->numReviews << endl;
 		}
 	}
-	else if (zip != -1 && rating == -1 && root->avgRating <= 3.0) {	// If a ZIP has been provided but not a rating
-		if (root->cityName == city && root->zipCode == zip) {	// Ignore businesses that don't match, or have a higher than a 3.0 star rating
+	else if (zip != -1 && rating == -1) {	// If a ZIP has been provided but not a rating
+		if (root->cityName == city && root->zipCode == zip && root->avgRating <= 3.0) {	// Ignore businesses that don't match, or have a higher than a 3.0 star rating
 			string whitespace = "";
 			for (int i = 0; i < 15 - root->name.size(); i++) {
 				whitespace.append(" ");
