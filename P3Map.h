@@ -11,7 +11,7 @@ struct MapNode {	// MapNode struct for a self-balancing BST that will be used to
 	// Values
 	double avgRating;	// Average star rating of the restaurant
 	int numReviews;		// Number of reviews the restaurant has
-	int rank;		// The data each MapNode will hold: a calculated value/rank for how "bad" a business is according to its star rating and number of reviews
+	int rank;		// A calculated value/rank for how "bad" a business is according to its star rating and number of reviews
 	int zipCode;		// Each MapNode will also hold a restaurant's ZIP code
 	
 	// Balance Factor and Left/Right Pointers
@@ -26,8 +26,8 @@ struct MapNode {	// MapNode struct for a self-balancing BST that will be used to
 
 struct P3Map {
 	vector<string> restaurantNames;	// Vector to hold keys (restaurant names)
-	MapNode* rootNode;	// Root node for set (implemented as a self-balancing BST) to hold values (restaurant rank and ZIP code)
-	int numNodes;
+	MapNode* rootNode;		// Root node for set (implemented as a self-balancing BST) to hold values (average rating, number of reviews, restaurant rank, and ZIP code)
+	int numNodes;			// Total number of nodes in the map
 
 	// Constructors
 	P3Map();	// Default Constructor
