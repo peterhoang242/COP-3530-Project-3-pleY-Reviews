@@ -13,6 +13,7 @@ struct MapNode {	// MapNode struct for a self-balancing BST that will be used to
 	int numReviews;		// Number of reviews the business has
 	int rank;			// A calculated value/rank for how "bad" a business is according to its star rating and number of reviews
 	int zipCode;		// Each MapNode will also hold a business's ZIP code
+	string cityName;	// Name of city that the business is located in
 	
 	// Balance Factor and Left/Right Pointers
 	int balanceFactor;
@@ -21,7 +22,7 @@ struct MapNode {	// MapNode struct for a self-balancing BST that will be used to
 
 	// Constructors
 	MapNode();	// Default constructor
-	MapNode(string _name, double _avgRating, int _numReviews, int _zipCode);	// Main constructor
+	MapNode(string _name, double _avgRating, int _numReviews, int _zipCode, string _cityName);	// Main constructor
 };
 
 struct P3Map {
@@ -34,12 +35,12 @@ struct P3Map {
 
 	// Main Functions
 		// Insert function
-	MapNode* insert(MapNode* _root, string _name, double _avgRating, int _numReviews, int _zipCode);
+	MapNode* insert(MapNode* _root, string _name, double _avgRating, int _numReviews, int _zipCode, string _cityName);
 	// NOTE: You must reinitialize the map tree's rootNode pointer using this insert function each time you insert in order for that pointer to update properly after rotations!
-	// Example: rootNode = mapObject.insert(rootNode, name, avgRating, numReviews, zipCode);
+	// Example: rootNode = mapObject.insert(rootNode, name, avgRating, numReviews, zipCode, cityName);
 
 	// Print Functions
-	void printWorstByZip(MapNode* _root, int _zip);	// Given a ZIP code, print/output a list of the worst businesses based on their rank using an inorder traversal, with the worst at the top and descending from there
+	void printWorstBy(MapNode* _root, string _city, int _zip = -1, double _rating = -1);	// Given a city name, and/or ZIP code, and/or star rating, print/output a list of the worst businesses that fit the parameters based on their rank using an inorder traversal, with the worst at the top and descending from there
 		// Basic traversal print functions: mainly for debugging purposes
 	void printRanksInorder(MapNode* _root);
 	void printRanksPostorder(MapNode* _root);

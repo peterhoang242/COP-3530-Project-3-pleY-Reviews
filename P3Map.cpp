@@ -9,12 +9,13 @@ MapNode::MapNode() {	// Default constructor
 	rightNode = nullptr;
 }
 
-MapNode::MapNode(string _name, double _avgRating, int _numReviews, int _zipCode) {	// Main constructor
+MapNode::MapNode(string _name, double _avgRating, int _numReviews, int _zipCode, string _cityName) {	// Main constructor
 	name = _name;
 	avgRating = _avgRating;
 	numReviews = _numReviews;
 	rank = calculateRank(_avgRating, _numReviews);
 	zipCode = _zipCode;
+	cityName = _cityName;
 	balanceFactor = 0;
 	leftNode = nullptr;
 	rightNode = nullptr;
@@ -27,26 +28,27 @@ P3Map::P3Map() {
 
 // NOTE: You must reinitialize the map tree's rootNode pointer using this insert function each time you insert in order for that pointer to update properly after rotations!
 // Example: rootNode = mapObject.insert(rootNode, name, avgRating, numReviews, zipCode);
-MapNode* P3Map::insert(MapNode* _root, string _name, double _avgRating, int _numReviews, int _zipCode) {
+MapNode* P3Map::insert(MapNode* _root, string _name, double _avgRating, int _numReviews, int _zipCode, string _cityName) {
 	MapNode* root = _root;
 	string name = _name;
 	double avgRating = _avgRating;
 	int numReviews = _numReviews;
 	int rank = calculateRank(avgRating, numReviews);
 	int zipCode = _zipCode;
+	string cityName = _cityName;
 
 	if (root != nullptr) {
 		if (rank < root->rank) {
-			root->leftNode = insert(root->leftNode, name, avgRating, numReviews, zipCode);
+			root->leftNode = insert(root->leftNode, name, avgRating, numReviews, zipCode, cityName);
 		}
 		else if (rank > root->rank) {
-			root->rightNode = insert(root->rightNode, name, avgRating, numReviews, zipCode);
+			root->rightNode = insert(root->rightNode, name, avgRating, numReviews, zipCode, cityName);
 		}
 	}
 	else {
 		numNodes++;
 		businessNames.push_back(name);
-		return new MapNode(name, avgRating, numReviews, zipCode);
+		return new MapNode(name, avgRating, numReviews, zipCode, cityName);
 	}
 
 	root->balanceFactor = getBalance(root);	// Check balance of node: get balance factor
@@ -73,24 +75,47 @@ MapNode* P3Map::insert(MapNode* _root, string _name, double _avgRating, int _num
 	return root;
 }
 
-void P3Map::printWorstByZip(MapNode* _root, int _zip) {
+void P3Map::printWorstBy(MapNode* _root, string _city, int _zip, double _rating) {
 	MapNode* root = _root;
+	string city = _city;
 	int zip = _zip;
+	double rating = _rating;
 	
 	if (root->leftNode != nullptr) {
-		printWorstByZip(root->leftNode, zip);
+		printWorstBy(root->leftNode, city, zip, rating);
 	}
 
-	if (root->zipCode == zip) {
-		string whitespace = "";
-		for (int i = 0; i < 15 - root->name.size(); i++) {
-			whitespace.append(" ");
+	if (zip == -1 && rating == -1) {	// If no ZIP code or rating has been provided (-1 is default value)
+		if (root->cityName == city) {
+			string whitespace = "";
+			for (int i = 0; i < 15 - root->name.size(); i++) {
+				whitespace.append(" ");
+			}
+			cout << root->name << whitespace << "| Average Rating: " << root->avgRating << " | Number of Reviews: " << root->numReviews << endl;
 		}
-		cout << root->name << whitespace << "| Average Rating: " << root->avgRating << " | Number of Reviews: " << root->numReviews << endl;
 	}
+	else if (zip != -1 && rating == -1) {	// If a ZIP has been provided but not a rating
+		if (root->cityName == city && root->zipCode == zip) {
+			string whitespace = "";
+			for (int i = 0; i < 15 - root->name.size(); i++) {
+				whitespace.append(" ");
+			}
+			cout << root->name << whitespace << "| Average Rating: " << root->avgRating << " | Number of Reviews: " << root->numReviews << endl;
+		}
+	}
+	else if (zip != -1 && rating != -1) {	// If a ZIP and rating has been provided
+		if (root->cityName == city && root->zipCode == zip && (root->avgRating >= rating && root->avgRating < rating + 1)) {
+			string whitespace = "";
+			for (int i = 0; i < 15 - root->name.size(); i++) {
+				whitespace.append(" ");
+			}
+			cout << root->name << whitespace << "| Average Rating: " << root->avgRating << " | Number of Reviews: " << root->numReviews << endl;
+		}
+	}
+	
 
 	if (root->rightNode != nullptr) {
-		printWorstByZip(root->rightNode, zip);
+		printWorstBy(root->rightNode, city, zip, rating);
 	}
 }
 
