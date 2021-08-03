@@ -266,6 +266,7 @@ int P3Map::getBalance(MapNode* _root) {
 	return balanceFactor;
 }
 
+// Referenced slides from Professor Aman's first lecture for Balanced Trees for the rotation algorithms
 MapNode* P3Map::rotateLeft(MapNode* _root) {
 	MapNode* root = _root;
 	MapNode* newParent = root->rightNode;		// New parent node after rotation
@@ -276,6 +277,7 @@ MapNode* P3Map::rotateLeft(MapNode* _root) {
 	return newParent;
 }
 
+// Referenced slides from Professor Aman's first lecture for Balanced Trees for the rotation algorithms
 MapNode* P3Map::rotateRight(MapNode* _root) {
 	MapNode* root = _root;
 	MapNode* newParent = root->leftNode;		// New parent node after rotation
