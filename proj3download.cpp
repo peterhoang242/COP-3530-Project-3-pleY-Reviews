@@ -14,8 +14,9 @@ int main()
     //for minheap
     map<string, City> cities;
 
-    //ifstream ifs("yelp_academic_dataset_business.json");
-    ifstream ifs("small_test.json");
+    ifstream ifs("yelp_academic_dataset_business.json");
+    //ifstream ifs("small_test.json");
+    //ifstream ifs("bigger_small_test.json");
     json jBusiness;
 
     //for map
@@ -47,8 +48,9 @@ int main()
     ifs.close();
     cout << endl;
 
-    //ifstream ifs("yelp_academic_dataset_business.json");
-    ifs.open("small_test.json");
+    ifs.open("yelp_academic_dataset_business.json");
+    //ifs.open("small_test.json");
+    //ifs.open("bigger_small_test.json");
     count = 0;
     if (ifs.is_open()) {
         cout << "Start inserting into the Min Heap" << endl;
@@ -103,43 +105,45 @@ int main()
         {
             cout << "Insert a Zipcode:\n";
             cin >> zip;
+            cout << "-----------------------------------------------------------------------------------" << endl;
             cout << "Map Search:\n";
             auto startMap = std::chrono::system_clock::now();
             businessMap.printWorstByZip(root, zip);
             std::chrono::duration<double> elapsed_seconds = std::chrono::system_clock::now() - startMap;
-            cout << endl;
+            cout << "-----------------------------------------------------------------------------------" << endl;
 
             cout << "Heap Search:\n";
             auto startHeap = std::chrono::system_clock::now();
             worstByZip(cities, zip);
             std::chrono::duration<double> seconds_elapsed = std::chrono::system_clock::now() - startHeap;
-            cout << endl;
+            cout << "-----------------------------------------------------------------------------------" << endl;
 
             cout << "Time for Map to search and print: " << elapsed_seconds.count() << " seconds" << endl;
             cout << "Time for Heap to search and print: " << seconds_elapsed.count() << " seconds" << endl;
-            cout << endl;
+            cout << "-----------------------------------------------------------------------------------" << endl;
         }
         break;
         case 2:
         {
             cout << "Insert a City:\n";
             cin >> city;
+            cout << "-----------------------------------------------------------------------------------" << endl;
             cout << "Map Search:\n";
             auto startMap = std::chrono::system_clock::now();
             businessMap.printWorstBy(root, city);
             std::chrono::duration<double> elapsed_seconds = std::chrono::system_clock::now() - startMap;
-            cout << endl;
+            cout << "-----------------------------------------------------------------------------------" << endl;
 
             cout << "Heap Search:\n";
             auto startHeap = std::chrono::system_clock::now();
             worstByCity(cities, city);
             std::chrono::duration<double> seconds_elapsed = std::chrono::system_clock::now() - startHeap;
-            cout << endl;
+            cout << "-----------------------------------------------------------------------------------" << endl;
 
 
             cout << "Time for Map to search and print: " << elapsed_seconds.count() << " seconds" << endl;
             cout << "Time for Heap to search and print: " << seconds_elapsed.count() << " seconds" << endl;
-            cout << endl;
+            cout << "-----------------------------------------------------------------------------------" << endl;
         }
 
         break;
@@ -148,22 +152,22 @@ int main()
             cout << "Insert a Zip Code and City:\n";
             cin >> zip;
             cin >> city;
-
+            cout << "-----------------------------------------------------------------------------------" << endl;
             cout << "Map Search:\n";
             auto startMap = std::chrono::system_clock::now();
             businessMap.printWorstBy(root, city, zip);
             std::chrono::duration<double> elapsed_seconds = std::chrono::system_clock::now() - startMap;
-            cout << endl;
+            cout << "-----------------------------------------------------------------------------------" << endl;
 
             cout << "Heap Search:\n";
             auto startHeap = std::chrono::system_clock::now();
             worstByCityNZip(cities, city, zip);
             std::chrono::duration<double> seconds_elapsed = std::chrono::system_clock::now() - startHeap;
-            cout << endl;
+            cout << "-----------------------------------------------------------------------------------" << endl;
 
             cout << "Time for Map to search and print: " << elapsed_seconds.count() << " seconds" << endl;
             cout << "Time for Heap to search and print: " << seconds_elapsed.count() << " seconds" << endl;
-            cout << endl;
+            cout << "-----------------------------------------------------------------------------------" << endl;
         }
         break;
         case 4:
@@ -176,17 +180,17 @@ int main()
             auto startMap = std::chrono::system_clock::now();
             businessMap.printWorstBy(root, city, zip, stod(stars));
             std::chrono::duration<double> elapsed_seconds = std::chrono::system_clock::now() - startMap;
-            cout << endl;
+            cout << "-----------------------------------------------------------------------------------" << endl;
 
             cout << "Heap Search:\n";
             auto startHeap = std::chrono::system_clock::now();
             worstByCityNZipNStar(cities, city, zip, stod(stars));
             std::chrono::duration<double> seconds_elasped = std::chrono::system_clock::now() - startHeap;
-            cout << endl;
+            cout << "-----------------------------------------------------------------------------------" << endl;
 
             cout << "Time for Map to search and print: " << elapsed_seconds.count() << " seconds" << endl;
             cout << "Time for Heap to search and print: " << seconds_elasped.count() << " seconds" << endl;
-            cout << endl;
+            cout << "-----------------------------------------------------------------------------------" << endl;
         }
         break;
         }

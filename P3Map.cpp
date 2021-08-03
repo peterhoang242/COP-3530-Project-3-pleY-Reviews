@@ -210,7 +210,7 @@ bool P3Map::printHelper(MapNode* _root) {
 	for (int i = 0; i < 60 - root->name.size(); i++) {
 		whitespace.append(" ");
 	}
-	cout << root->name << whitespace << " | Average Rating: " << root->avgRating; 
+	cout << root->name << whitespace << " | Average Rating: " << root->avgRating;
 	if (fmod(root->avgRating, 1) == 0) {	// Print extra whitespaces if rating is a whole number, to keep the print/output consistent
 		cout << "  ";
 	}

@@ -4,7 +4,7 @@
 #include <map>
 #include <string>
 #include "heap.h"
-#include "json.h"
+#include "json.hpp"
 
 using json = nlohmann::json;
 using namespace std;
@@ -25,7 +25,6 @@ class City {
 public:
 	City() {}
 	map<string, zipCode> zips;
-	void insertData(json data);
 };
 
 /* Prints worst business' in ascending order using the city name, zip, and the star rating of interest as input */
@@ -58,8 +57,17 @@ void worstByCityNZipNStar(map<string, City>& cities, string cityName, string zip
 	for (int i = 0; i < cities[cityName].zips[zip].businessRatings.getSize(); i++) {
 		// if the rating is within range print it out
 		if (temp.getTop().first > test && temp.getTop().first < comparsionNum) {
-			cout << "Buiness Name: " << temp.getTop().second << " ";
-			cout << "Rating: " << fixed << setprecision(1) << temp.getTop().first / 100000 << " Number Of Reviews: ";
+			//cout << "Buiness Name: " << temp.getTop().second << " ";
+			//cout << "Rating: " << fixed << setprecision(1) << temp.getTop().first / 100000 << " Number Of Reviews: ";
+
+			string whitespace = "";
+			for (int i = 0; i < 60 - temp.getTop().second.size(); i++) {
+				whitespace.append(" ");
+			}
+			cout << temp.getTop().second << whitespace << " | Average Rating: " << fixed << setprecision(1) << temp.getTop().first / 100000;
+			cout << " | Number of Reviews: ";
+
+
 			// Determines based on its rank what the orginal number of reviews where
 			if (temp.getTop().first < 180000) { // 1 star
 				if (100000 - temp.getTop().first < 0)
@@ -102,8 +110,18 @@ void worstByCityNZip(map<string, City>& cities, string cityName, string zip) {
 	auto temp = cities[cityName].zips[zip].businessRatings; // temporarliy holds the heap for iteration
 	// iterate through the data using the specificed city name and zip
 	for (int i = 0; i < cities[cityName].zips[zip].businessRatings.getSize(); i++) {
-		cout << "Buiness Name: " << temp.getTop().second << " ";
-		cout << "Rating: " << fixed << setprecision(1) << temp.getTop().first / 100000 << " Number Of Reviews: ";
+		//cout << "Buiness Name: " << temp.getTop().second << " ";
+		//cout << "Rating: " << fixed << setprecision(1) << temp.getTop().first / 100000 << " Number Of Reviews: ";
+
+
+		string whitespace = "";
+		for (int i = 0; i < 60 - temp.getTop().second.size(); i++) {
+			whitespace.append(" ");
+		}
+		cout << temp.getTop().second << whitespace << " | Average Rating: " << fixed << setprecision(1) << temp.getTop().first / 100000;
+		cout << " | Number of Reviews: ";
+
+
 		// Determines based on its rank what the orginal number of reviews where
 		if (temp.getTop().first < 180000) { // 1 star
 			if (100000 - temp.getTop().first < 0)
@@ -147,9 +165,17 @@ void worstByCity(map<string, City>& cities, string cityName) {
 		auto temp = cities[cityName].zips[x.first].businessRatings; // temporarliy holds the heap for iteration
 		// iterate throught the specified zip within said city
 		for (int j = 0; j < cities[cityName].zips[x.first].businessRatings.getSize(); j++) {
-			cout << "Buiness Name: " << temp.getTop().second << " ";
+			//cout << "Buiness Name: " << temp.getTop().second << " ";
 			// instead of doing 1 star use the actual star rating prob
-			cout << "Rating: " << fixed << setprecision(1) << temp.getTop().first / 100000 << " Number Of Reviews: ";
+			//cout << "Rating: " << fixed << setprecision(1) << temp.getTop().first / 100000 << " Number Of Reviews: ";
+
+			string whitespace = "";
+			for (int i = 0; i < 60 - temp.getTop().second.size(); i++) {
+				whitespace.append(" ");
+			}
+			cout << temp.getTop().second << whitespace << " | Average Rating: " << fixed << setprecision(1) << temp.getTop().first / 100000;
+			cout << " | Number of Reviews: ";
+
 			// Determines based on its rank what the orginal number of reviews where
 			if (temp.getTop().first < 180000) { // 1 star
 				if (100000 - temp.getTop().first < 0)
