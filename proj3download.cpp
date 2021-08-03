@@ -3,7 +3,7 @@
 #include <fstream>
 #include <chrono>
 #include <ctime> 
-#include "P3Map.cpp"
+#include "P3Map.h"
 #include "minHeappleY.h"
 
 
